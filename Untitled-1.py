@@ -8,20 +8,39 @@ from openpyxl import load_workbook
 import time
 
 wb = load_workbook(
-    filename="/home/severn/Documents/devel/aspks/RSPO_TEST.xlsx")
+    filename="D:/python/aspks/RSPO_TEST.xlsx")
 
 sheetRange = wb['Profil']
 
 driver = webdriver.Chrome()
+url = 'https://greenpoint.fortasbi.org/desktop/panel/poktan'
+driver.get(url)
+driver.delete_all_cookies()
 
-driver.get("https://greenpoint.fortasbi.org/csm/desktop")
+cookies = [
+    {
+        'name': 'csm_gp_session',
+        'value': 'scr90ef7s7o05cp72pnihq7t6tp5hbll',
+    },
+    {
+        'name': 'remember_code',
+        'value': '9c42b4b4f38c75c39a17fe3cb0acfaceec5d8849.e61e3d2f00a2b44e223f6ca806b85156b5a95f9abf0837efd5da7a0b9b5de46433a0142cd3d3f88eaf69f9854e6cd0f7383de8d5e8935cb721442bc84e0174f2',
+    },
+    # Add more cookies if needed
+]
+
+for cookie in cookies:
+    driver.add_cookie(cookie)
+url = 'https://greenpoint.fortasbi.org/csm/desktop'
+driver.get(url)
 driver.maximize_window()
-driver.implicitly_wait(10)
-driver.find_element(
-    By.XPATH('/html/body/div[5]/div/div[2]/div[2][text()="Poktan"]')).click()
-WebDriverWait(driver, 10).until(
-    EC.visibility_of_element_located((By.XPATH, '/html/body/div[5]/div/div[11]')))
-
+# WebDriverWait(driver,10).until(EC.visibility_of_element_located((By.XPATH,'/html/body/div[1]/div/div/div/div[2]/div[1]/div[2]/div/table/tbody')))
+# Find an element on the webpage and click it
+element = driver.find_element(By.XPATH,'/html/body/div[5]/div/div[2]')
+element.click()
+WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "btnAdd")))
+element2 = driver.find_element(By.XPATH,'//*[@id="btnAdd"]')
+element2.click()
 
 # looping
 i = 2
