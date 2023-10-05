@@ -8,7 +8,7 @@ from openpyxl import load_workbook
 import time
 
 wb = load_workbook(
-    filename="D:/python/aspks/RSPO_TEST.xlsx")
+    filename="/home/severn/Documents/devel/aspks/RSPO_TEST.xlsx")
 
 sheetRange = wb['Profil']
 
@@ -20,27 +20,20 @@ driver.delete_all_cookies()
 cookies = [
     {
         'name': 'csm_gp_session',
-        'value': 'scr90ef7s7o05cp72pnihq7t6tp5hbll',
+        'value': '4fhmdbglks6a94sk326lkqp5pcth34ns',
     },
     {
         'name': 'remember_code',
-        'value': '9c42b4b4f38c75c39a17fe3cb0acfaceec5d8849.e61e3d2f00a2b44e223f6ca806b85156b5a95f9abf0837efd5da7a0b9b5de46433a0142cd3d3f88eaf69f9854e6cd0f7383de8d5e8935cb721442bc84e0174f2',
+        'value': 'b359cc3dd42abb07e0f30c0f5bd8b814d87d9569.65516de6a0e1459a9e0f16296dd6182c4cd53e99c4edb9ba96bf3fa042542a9d11a4eae7c4df34488188e506b36a096646914ffbb70aebf0c462426da1892ed8',
     },
     # Add more cookies if needed
 ]
 
 for cookie in cookies:
     driver.add_cookie(cookie)
-url = 'https://greenpoint.fortasbi.org/csm/desktop'
+url = 'https://greenpoint.fortasbi.org/desktop/gapoktan/poktan/page/grid'
 driver.get(url)
 driver.maximize_window()
-# WebDriverWait(driver,10).until(EC.visibility_of_element_located((By.XPATH,'/html/body/div[1]/div/div/div/div[2]/div[1]/div[2]/div/table/tbody')))
-# Find an element on the webpage and click it
-element = driver.find_element(By.XPATH,'/html/body/div[5]/div/div[2]')
-element.click()
-WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "btnAdd")))
-element2 = driver.find_element(By.XPATH,'//*[@id="btnAdd"]')
-element2.click()
 
 # looping
 i = 2
@@ -58,30 +51,60 @@ while i <= len(sheetRange['A']):
     x = sheetRange['K'+str(i)].value
     l = sheetRange['L'+str(i)].value
 
-    driver.find_element_by_id('btnAdd').click()
+    time.sleep(6)
+    driver.find_element(By.XPATH, '//*[@id="btnAdd"]').click()
 
     try:
         WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, '/html/body/div[5]')))
 
-        driver.find_element_by_id(
-            '_easyui_textbox_input4').send_keys(namapoktan)
-        driver.find_element_by_id(
-            '_easyui_textbox_input5').send_keys(komoditas)
-        driver.find_element_by_id('_easyui_textbox_input7').send_keys(alamat)
-        driver.find_element_by_id('_easyui_textbox_input8').send_keys(provinsi)
-        driver.find_element_by_id(
-            '_easyui_textbox_input9').send_keys(kabupaten)
-        driver.find_element_by_id(
-            '_easyui_textbox_input10').send_keys(kecamatan)
-        driver.find_element_by_id(
-            '_easyui_textbox_input11').send_keys(kelurahan)
-        driver.find_element_by_id('_easyui_textbox_input12').send_keys(ketua)
-        driver.find_element_by_id('_easyui_textbox_input13').send_keys(notelp)
-        driver.find_element_by_id('_easyui_textbox_input14').send_keys(email)
-        driver.find_element_by_id('_easyui_textbox_input15').send_keys(x)
-        driver.find_element_by_id('_easyui_textbox_input16').send_keys(l)
-        driver.find_element_by_id('btnSave').click()
+        driver.find_element(
+            By.ID, '_easyui_textbox_input4').send_keys(namapoktan)
+        komo = driver.find_element(By.ID, '_easyui_textbox_input5')
+        komo.clear()
+        komo.send_keys(komoditas)
+        driver.find_element(By.ID, '_easyui_textbox_input7').send_keys(alamat)
+
+        prov = driver.find_element(By.ID, '_easyui_textbox_input8')
+        prov.clear()
+        prov.send_keys(provinsi)
+        # provval = driver.find_element(By.NAME, value="ProvID")
+        # driver.execute_script(
+        #     "arguments[0].setAttribute('value', '61')", provval)
+        time.sleep(3)
+        kab = driver.find_element(By.ID, '_easyui_textbox_input9')
+        kab.clear()
+        kab.send_keys(kabupaten)
+        # kabval = driver.find_element(By.NAME, value="KabID")
+        # driver.execute_script(
+        #     "arguments[0].setAttribute('value', '6109')", kabval)
+        time.sleep(3)
+        kec = driver.find_element(By.ID, '_easyui_textbox_input10')
+        kec.clear()
+        kec.send_keys(kecamatan)
+        # kecval = driver.find_element(By.NAME, value="KecID")
+        # driver.execute_script(
+        #     "arguments[0].setAttribute('value', '6109040')", kecval)
+        time.sleep(3)
+        kel = driver.find_element(By.ID, '_easyui_textbox_input11')
+        kel.clear()
+        kel.send_keys(kelurahan)
+        # kelval = driver.find_element(By.NAME, value="KelID")
+        # driver.execute_script(
+        #     "arguments[0].setAttribute('value', '6109040005')", kelval)
+
+        time.sleep(1)
+        driver.find_element(By.ID, '_easyui_textbox_input12').send_keys(ketua)
+        driver.find_element(By.ID, '_easyui_textbox_input13').send_keys(notelp)
+        driver.find_element(By.ID, '_easyui_textbox_input14').send_keys(email)
+        xx = driver.find_element(By.ID, '_easyui_textbox_input15')
+        xx.clear()
+        xx.send_keys(x)
+        ll = driver.find_element(By.ID, '_easyui_textbox_input16')
+        ll.clear()
+        ll.send_keys(l)
+        time.sleep(5)
+        driver.find_element(By.ID, 'btnSave').click()
     except TimeoutException:
         print("gagal cuy")
         pass
