@@ -13,25 +13,25 @@ wb = load_workbook(
 sheetRange = wb['Profil']
 
 driver = webdriver.Chrome()
-url = 'https://greenpoint.fortasbi.org/desktop/panel/poktan'
+url = ''
 driver.get(url)
 driver.delete_all_cookies()
 
 cookies = [
     {
         'name': 'csm_gp_session',
-        'value': '4fhmdbglks6a94sk326lkqp5pcth34ns',
+        'value': '',
     },
     {
         'name': 'remember_code',
-        'value': 'b359cc3dd42abb07e0f30c0f5bd8b814d87d9569.65516de6a0e1459a9e0f16296dd6182c4cd53e99c4edb9ba96bf3fa042542a9d11a4eae7c4df34488188e506b36a096646914ffbb70aebf0c462426da1892ed8',
+        'value': '',
     },
     # Add more cookies if needed
 ]
 
 for cookie in cookies:
     driver.add_cookie(cookie)
-url = 'https://greenpoint.fortasbi.org/desktop/gapoktan/poktan/page/grid'
+url = ''
 driver.get(url)
 driver.maximize_window()
 
